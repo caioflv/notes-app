@@ -1,0 +1,118 @@
+.note-edit-screen {
+	width: 100%;
+	height: 100vh;
+	height: 100dvh;
+
+	position: fixed;
+	inset: 0;
+
+	background-color: var(--color-bkg-primary);
+	/* background-color: transparent; */
+	/* backdrop-filter: blur(4px); */
+
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+
+	z-index: 1;
+
+	& > div {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+		margin-top: 2rem;
+		border-radius: 1rem;
+
+		/* width: 95%; */
+		height: 95%;
+
+		background-color: var(--color-bkg-primary);
+
+		z-index: 2;
+
+		& > input {
+			all: unset;
+
+			width: 100%;
+			height: 2rem;
+			border-bottom: 2px solid var(--color-card-stroke);
+
+			font: var(--text-label-lg);
+			color: var(--color-content-primary);
+		}
+
+		& > textarea {
+			all: unset;
+			white-space: pre-wrap;
+
+			height: 100%;
+			width: 100%;
+
+			font: var(--text-p);
+			color: var(--color-content-primary);
+		}
+	}
+
+	.note-edit-header {
+		display: flex;
+		flex-direction: row;
+		justify-content: space-between;
+
+		align-items: center;
+
+		& > #close-note-btn {
+			transform: scaleX(-1);
+
+			width: 1rem;
+			height: 1rem;
+
+			mask: url("../assets/icons/right-arrow.svg") no-repeat center / contain;
+			-webkit-mask: url("../assets/icons/right-arrow.svg") no-repeat center /
+				contain;
+
+			background-color: black;
+		}
+
+		& > button {
+			all: unset;
+			box-sizing: border-box;
+
+			width: fit-content;
+			align-self: flex-end;
+
+			padding: 0.25rem;
+			border-radius: 0.25rem;
+
+			font: var(--text-label-md);
+			color: var(--color-content-primary);
+		}
+	}
+}
+
+.create-note-btn {
+	position: fixed;
+
+	bottom: 4rem;
+	right: 2rem;
+
+	background-color: var(--color-bkg-secondary);
+
+	padding: 1rem;
+	border-radius: 50%;
+
+	text-align: center;
+
+	width: 4rem;
+	height: 4rem;
+}
+
+#feedback-color-default {
+	color: var(--color-content-primary);
+}
+#feedback-txt-color-ok {
+	color: green;
+}
+#feedback-txt-color-error {
+	color: red;
+}

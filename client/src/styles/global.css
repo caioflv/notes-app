@@ -1,0 +1,66 @@
+:where(*, *::after, *::before) {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+:root {
+	/* font */
+	--ff-title: "Inter Tight", sans-serif;
+	--text-title: 700 1.5rem/2rem var(--ff-title);
+
+	--ff-body: "Inter", sans-serif;
+
+	--text-label-lg: 700 1rem/1.5rem var(--ff-body);
+	--text-label-md: 500 1rem/1rem var(--ff-body);
+	--text-label-sm: 500 0.75rem/1rem var(--ff-body);
+
+	--text-p: 500 1rem/1.25rem var(--ff-body);
+	--text-small: 500 0.75rem/1rem var(--ff-body);
+
+	--text-link: 500 1rem/1rem var(--ff-body);
+
+	/* color */
+	/* content */
+	--color-content-primary: #201c18;
+	--color-content-secondary: #2b2622;
+	/* background */
+	--color-bkg-primary: #ffffff;
+	--color-bkg-secondary: #f2efed;
+	/* stroke */
+	--color-card-stroke: #201c18;
+
+	--max-width: calc(23.4375rem - 2rem);
+}
+
+html {
+	height: 100vh;
+	height: 100dvh;
+}
+
+body {
+	margin-top: 2rem;
+	margin-bottom: 4rem;
+	/* padding-bottom: 4rem; */
+
+	overflow-x: hidden;
+	background-color: var(--color-bkg-primary);
+
+	position: relative;
+}
+
+input,
+textarea {
+	-webkit-appearance: none;
+	-moz-appearance: none;
+}
+
+small {
+	font: var(--text-small);
+	color: var(--color-content-secondary);
+}
+
+.content {
+	margin-inline: auto;
+	width: var(--max-width);
+}

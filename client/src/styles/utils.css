@@ -1,0 +1,13 @@
+.hidden {
+	display: none;
+}
+.hidden-by-search {
+	display: none;
+}
+.body-lock {
+	overflow: hidden;
+}
+
+.opacity-02 {
+	opacity: 0.25;
+}

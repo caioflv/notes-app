@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Notes App</title>
+	</head>
+	<body>
+		<header class="content">
+			<p>Hello, Caio!</p>
+			<div class="add-notebook">
+				<img src="" alt="" />
+				<small>Notebook</small>
+			</div>
+			<div class="add-note">
+				<img src="" alt="" />
+				<small>Note</small>
+			</div>
+		</header>
+
+		<section class="filters content">
+			<div class="notebook-info">
+				<div class="delete-notebook">
+					<div></div>
+				</div>
+				<div class="notebook-select">
+					<select id="notebook-filter"></select>
+					<img src="" alt="" />
+				</div>
+			</div>
+
+			<div class="search-input">
+				<img src="" alt="" />
+				<input
+					type="text"
+					name=""
+					id="note-search"
+					placeholder="Search Notes"
+				/>
+			</div>
+		</section>
+
+		<main class="content">
+			<section class="notes-view"></section>
+			<section class="notebooks-view hidden"></section>
+		</main>
+
+		<div class="note-edit-screen hidden">
+			<div class="content">
+				<div class="note-edit-header">
+					<img src="" id="close-note-btn" alt="" />
+					<div class="notebook-info">
+						<div class="notebook-select">
+							<select id="notebook-selection"></select>
+							<img src="" alt="" />
+						</div>
+					</div>
+					<button type="button" id="delete-note-btn">Delete</button>
+					<button type="button" id="save-note-btn">Save</button>
+				</div>
+
+				<input type="text" name="" id="" />
+				<textarea name="" id=""></textarea>
+			</div>
+		</div>
+
+		<div class="add-notebook-popup hidden">
+			<div>
+				<h2>Notebook name:</h2>
+				<div class="add-nb-input-wrapper">
+					<input type="text" name="" id="add-nb-input" />
+				</div>
+				<button type="button" id="create-notebook-btn">Ok</button>
+			</div>
+		</div>
+	</body>
+</html>

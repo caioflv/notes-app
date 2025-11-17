@@ -1,0 +1,126 @@
+.filters {
+	margin-top: 2.5rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.notebook-info {
+	max-width: 100%;
+	width: fit-content;
+	align-items: center;
+
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: flex-start;
+	gap: 0.5rem;
+}
+
+.delete-notebook {
+	width: fit-content;
+	height: 1.25rem;
+	padding-inline: 0.4rem;
+
+	/* border: 1px solid var(--color-content-primary); */
+	border-radius: 0.5rem;
+
+	display: flex;
+	flex-direction: row;
+	/* gap: 0.5rem; */
+	align-items: center;
+
+	opacity: 1;
+
+	& > div {
+		width: 0.6rem;
+		height: 0.6rem;
+
+		mask: url("../assets/icons/x.svg") no-repeat center / contain;
+		-webkit-mask: url("../assets/icons/x.svg") no-repeat center / contain;
+
+		background-color: red;
+	}
+}
+
+.notebook-select {
+	position: relative;
+	overflow: hidden;
+	width: 100%;
+
+	padding: 0 1.5rem 0 0;
+
+	& > select {
+		all: unset;
+		box-sizing: border-box;
+
+		width: 100%;
+		height: auto;
+
+		white-space: nowrap;
+		text-overflow: ellipsis;
+
+		padding-inline: 0.25rem;
+
+		font: var(--text-label-md);
+		color: var(--color-content-primary);
+	}
+
+	& > img {
+		position: absolute;
+		width: 0.7rem;
+		height: 0.7rem;
+
+		top: 50%;
+		transform: translateY(-50%);
+		right: 0.5rem;
+
+		mask: url("../assets/icons/down-arrow.svg") no-repeat center / contain;
+		-webkit-mask: url("../assets/icons/down-arrow.svg") no-repeat center /
+			contain;
+
+		background-color: black;
+
+		pointer-events: none;
+	}
+}
+
+.search-input {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	align-items: center;
+	gap: 1rem;
+
+	border-radius: 0.5rem;
+	border: 1px solid var(--color-content-primary);
+
+	height: 2rem;
+
+	padding-inline: 0.75rem;
+
+	& > input {
+		all: unset;
+		box-sizing: border-box;
+
+		flex: auto;
+
+		font: var(--text-label-md);
+		color: var(--color-content-primary);
+
+		&::placeholder {
+			color: var(--color-content-primary);
+		}
+	}
+
+	& > img {
+		width: 1rem;
+		height: 1rem;
+
+		mask: url("../assets/icons/magnify-glass.svg") no-repeat center / contain;
+		-webkit-mask: url("../assets/icons/magnify-glass.svg") no-repeat center /
+			contain;
+
+		background-color: var(--color-content-secondary);
+	}
+}
