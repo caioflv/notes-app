@@ -7,11 +7,16 @@
 			"@/*": ["./src/*"]
 		},
 
-		"module": "node16",
+		"module": "commonjs",
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": false,
 
 		"strict": true,
-		"skipLibCheck": true
-	}
+		"skipLibCheck": true,
+
+		"outDir": "dist",
+		"rootDir": "src"
+	},
+	"include": ["src"],
+	"exclude": ["knexfile.ts"]
 }

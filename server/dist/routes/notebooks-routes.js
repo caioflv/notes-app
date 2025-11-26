@@ -1,0 +1,13 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.notebooksRoutes = void 0;
+const express_1 = require("express");
+const notebooks_controller_1 = require("../controllers/notebooks-controller");
+const notebooksRoutes = (0, express_1.Router)();
+exports.notebooksRoutes = notebooksRoutes;
+const notebooksController = new notebooks_controller_1.NotebooksController();
+notebooksRoutes.get("/", notebooksController.index);
+notebooksRoutes.get("/:notebook_id", notebooksController.show);
+notebooksRoutes.post("/", notebooksController.create);
+notebooksRoutes.patch("/:id", notebooksController.update);
+notebooksRoutes.delete("/:id", notebooksController.remove);

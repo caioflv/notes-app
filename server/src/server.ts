@@ -2,7 +2,7 @@ import express from "express"
 import path from "path"
 import cors from "cors"
 
-import { routes } from "./routes"
+import { routes } from "./routes/index"
 import { setHeader } from "./middlewares/header"
 
 const PORT = 3333

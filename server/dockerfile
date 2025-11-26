@@ -1,0 +1,36 @@
+# Shared base
+FROM node:20-alpine AS base
+
+
+# Step 1 — Build (TS → JS)
+FROM base AS builder
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm install
+
+COPY . .
+
+RUN npm run build
+
+# Step 2 — Runtime
+FROM base AS runtime
+WORKDIR /app
+
+
+COPY package*.json ./
+
+# Remove node_modules from builder
+RUN rm -rf node_modules
+
+# install only prod packages
+RUN npm install --omit=dev    
+
+# Copy only dist and .db
+COPY --from=builder /app/dist ./dist
+
+RUN mkdir -p db
+
+EXPOSE 3333
+
+CMD ["node", "dist/server.js"]

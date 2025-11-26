@@ -3,9 +3,12 @@
 	"version": "1.0.0",
 	"description": "notes-api",
 	"main": "index.js",
+	"type": "commonjs",
 	"scripts": {
 		"dev": "tsx watch src/server.ts",
-		"knex": "node --import tsx ./node_modules/knex/bin/cli.js"
+		"knex": "node --import tsx ./node_modules/knex/bin/cli.js",
+		"start": "node dist/server.js",
+		"build": "tsc"
 	},
 	"author": "Caio Flávio",
 	"license": "ISC",
