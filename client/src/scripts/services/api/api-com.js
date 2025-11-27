@@ -1,4 +1,4 @@
-import { BASE_URL } from "./config.js"
+import { BASE_URL, TOKEN } from "./config.js"
 
 export async function apiGet(routeName, id) {
 	try {
@@ -15,12 +15,13 @@ export async function apiGet(routeName, id) {
 	}
 }
 
-export async function apiPost(routeName, body) {
+export async function apiPost(routeName, body, useToken = true) {
 	try {
 		const response = await fetch(`${BASE_URL}/${routeName}`, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
+				...(useToken && { Authorization: `Bearer ${TOKEN}` }),
 			},
 			body: JSON.stringify(body),
 		})
@@ -37,6 +38,7 @@ export async function apiPatch(routeName, id, body) {
 			method: "PATCH",
 			headers: {
 				"Content-Type": "application/json",
+				Authorization: `Bearer ${TOKEN}`,
 			},
 			body: JSON.stringify(body),
 		})
@@ -53,6 +55,7 @@ export async function apiDelete(routeName, id) {
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
+				Authorization: `Bearer ${TOKEN}`,
 			},
 		})
 		return await response.json()

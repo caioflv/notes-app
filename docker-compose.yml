@@ -8,6 +8,6 @@ services:
       - "3333:3333"
     restart: always
     volumes:
-      - ${PWD}/db:/app/db
+      - ${PWD}/server/db:/app/db
 
     container_name: notes-api

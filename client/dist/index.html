@@ -1,2 +1,77 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><title>Document</title><script defer="defer" src="./main.bde66b5a2e749ca65578.js"></script><link href="./styles.5fafac5359796bdfe7e2.css" rel="stylesheet"></head><body><header class="content"><h1>Notes</h1><nav><div class="nav-item"><button id="show-notes-btn" type="button">All</button></div><div class="nav-item"><button id="show-notebooks-btn" type="button">Notebooks</button></div></nav></header><main class="content"><div class="filters"><div class="filter hidden"><span>Notebook</span> <img src="./assets/icons/x.svg" alt=""/></div></div><section class="notes-view"></section><section class="notebooks-view hidden"></section></main><div class="note-edit-screen hidden"><div><div class="note-edit-header"><img src="./assets/icons/right-arrow.svg" id="close-note-btn" alt=""/> <button type="button" id="save-note-btn">Save</button></div><input name="" id=""/> <textarea name="" id="">
-Lorem ipsum dolor, sit amet consectetur adipisicing elit. Accusantium, recusandae quidem? Cum quaerat et expedita perspiciatis totam tenetur eaque vitae atque, sed explicabo deserunt ducimus ab? Rerum, amet obcaecati? Sapiente!</textarea></div></div></body></html>
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Notes App</title>
+	<script defer src="/main.js"></script></head>
+	<body>
+		<header class="content">
+			<p>Hello, Caio!</p>
+			<div class="add-notebook">
+				<img src="" alt="" />
+				<small>Notebook</small>
+			</div>
+			<div class="add-note">
+				<img src="" alt="" />
+				<small>Note</small>
+			</div>
+		</header>
+
+		<section class="filters content">
+			<div class="notebook-info">
+				<div class="delete-notebook">
+					<div></div>
+				</div>
+				<div class="notebook-select">
+					<select id="notebook-filter"></select>
+					<img src="" alt="" />
+				</div>
+			</div>
+
+			<div class="search-input">
+				<img src="" alt="" />
+				<input
+					type="text"
+					name=""
+					id="note-search"
+					placeholder="Search Notes"
+				/>
+			</div>
+		</section>
+
+		<main class="content">
+			<section class="notes-view"></section>
+			<section class="notebooks-view hidden"></section>
+		</main>
+
+		<div class="note-edit-screen hidden">
+			<div class="content">
+				<div class="note-edit-header">
+					<img src="" id="close-note-btn" alt="" />
+					<div class="notebook-info">
+						<div class="notebook-select">
+							<select id="notebook-selection"></select>
+							<img src="" alt="" />
+						</div>
+					</div>
+					<button type="button" id="delete-note-btn">Delete</button>
+					<button type="button" id="save-note-btn">Save</button>
+				</div>
+
+				<input type="text" name="" id="" />
+				<textarea name="" id=""></textarea>
+			</div>
+		</div>
+
+		<div class="add-notebook-popup hidden">
+			<div>
+				<h2>Notebook name:</h2>
+				<div class="add-nb-input-wrapper">
+					<input type="text" name="" id="add-nb-input" />
+				</div>
+				<button type="button" id="create-notebook-btn">Ok</button>
+			</div>
+		</div>
+	</body>
+</html>

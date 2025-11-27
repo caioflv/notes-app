@@ -7,7 +7,10 @@ class NotebooksController {
 		try {
 			const notebooks = await knex("notebooks").select().orderBy("created_at")
 
-			return response.json({ success: true, notebooks: notebooks })
+			return response.json({
+				success: true,
+				notebooks: notebooks,
+			})
 		} catch (error) {
 			next(error)
 		}
@@ -54,7 +57,9 @@ class NotebooksController {
 				})
 				.returning("id")
 
-			return response.status(201).json({ success: true, id: result[0].id })
+			return response
+				.status(201)
+				.json({ success: true, id: result[0].id, userRole: request.user?.role })
 		} catch (error) {
 			next(error)
 		}
