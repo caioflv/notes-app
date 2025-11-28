@@ -4,8 +4,9 @@ import cors from "cors"
 
 import { routes } from "./routes/index"
 import { setHeader } from "./middlewares/header"
+import { env } from "./env"
 
-const PORT = 3333
+const PORT = env.PORT
 
 const isProd = process.env.NODE_ENV === "production"
 const clientPath = isProd
