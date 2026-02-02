@@ -8,10 +8,7 @@ import { env } from "./env"
 
 const PORT = env.PORT
 
-const isProd = process.env.NODE_ENV === "production"
-const clientPath = isProd
-	? path.resolve(process.cwd(), "../client/dist") // Docker
-	: path.resolve(__dirname, "../../client/dist") // Local
+const clientPath = path.resolve(process.cwd(), "../client/build")
 
 const app = express()
 
@@ -21,7 +18,7 @@ app.use(
 	cors({
 		origin: "*",
 		methods: ["GET", "POST", "PUT", "DELETE", "PATCH"],
-	})
+	}),
 )
 
 app.use(setHeader)
