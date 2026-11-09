@@ -33,14 +33,14 @@ describe("HTTP middleware and fallback", () => {
 		)
 	})
 
-	it("BUG atual: Content-Security-Policy header is never sent on normal responses", async () => {
+	it("CURRENT BUG: Content-Security-Policy header is never sent on normal responses", async () => {
 		const response = await request(ctx.app).get("/notebooks")
 
 		expect(response.status).toBe(200)
 		expect(response.headers["content-security-policy"]).toBeUndefined()
 	})
 
-	it("BUG atual: invalid JSON body is swallowed by setHeader and the route runs with an undefined body", async () => {
+	it("CURRENT BUG: invalid JSON body is swallowed by setHeader and the route runs with an undefined body", async () => {
 		const token = await login(ctx.app)
 
 		const response = await request(ctx.app)
@@ -54,7 +54,7 @@ describe("HTTP middleware and fallback", () => {
 		expect(response.headers["content-security-policy"]).toContain("default-src 'self'")
 	})
 
-	it("BUG atual: invalid JSON body on /sessions returns 500 with a TypeError message", async () => {
+	it("CURRENT BUG: invalid JSON body on /sessions returns 500 with a TypeError message", async () => {
 		const response = await request(ctx.app)
 			.post("/sessions")
 			.set("Content-Type", "application/json")
@@ -65,7 +65,7 @@ describe("HTTP middleware and fallback", () => {
 	})
 
 	it.each(["/", "/some/client/route"])(
-		"BUG atual: GET %s returns 500 because the server looks for the front in client/build",
+		"CURRENT BUG: GET %s returns 500 because the server looks for the front in client/build",
 		async (path) => {
 			const consoleError = vi.spyOn(console, "error").mockImplementation(() => {})
 

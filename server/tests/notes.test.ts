@@ -26,7 +26,7 @@ describe("notes", () => {
 	const auth = () => ({ Authorization: `Bearer ${token}` })
 
 	describe("POST /notes", () => {
-		it("BUG atual: returns 201 with the new id wrapped in an array", async () => {
+		it("CURRENT BUG: returns 201 with the new id wrapped in an array", async () => {
 			const response = await request(ctx.app)
 				.post("/notes")
 				.set(auth())
@@ -48,7 +48,7 @@ describe("notes", () => {
 			expect(row.notebook_id).toBe(notebookId)
 		})
 
-		it("BUG atual: empty content is stored and returned as the string \"[]\"", async () => {
+		it("CURRENT BUG: empty content is stored and returned as the string \"[]\"", async () => {
 			const id = await createNote(ctx.app, token, {
 				title: "Title",
 				content: "   ",
@@ -62,7 +62,7 @@ describe("notes", () => {
 			expect(response.body.note.content).toBe("[]")
 		})
 
-		it("BUG atual: nonexistent notebook_id is accepted and creates an orphan note", async () => {
+		it("CURRENT BUG: nonexistent notebook_id is accepted and creates an orphan note", async () => {
 			const response = await request(ctx.app)
 				.post("/notes")
 				.set(auth())
@@ -73,7 +73,7 @@ describe("notes", () => {
 			expect(row.notebook_id).toBe(99999)
 		})
 
-		it("BUG atual: missing content returns 500 instead of 400", async () => {
+		it("CURRENT BUG: missing content returns 500 instead of 400", async () => {
 			const response = await request(ctx.app)
 				.post("/notes")
 				.set(auth())
@@ -83,7 +83,7 @@ describe("notes", () => {
 			expect(response.body.message).toContain("invalid_type")
 		})
 
-		it("BUG atual: notebook_id sent as a string returns 500 instead of 400", async () => {
+		it("CURRENT BUG: notebook_id sent as a string returns 500 instead of 400", async () => {
 			const response = await request(ctx.app)
 				.post("/notes")
 				.set(auth())
@@ -93,7 +93,7 @@ describe("notes", () => {
 			expect(response.body.message).toContain("expected number")
 		})
 
-		it("BUG atual: empty title returns 500 instead of 400", async () => {
+		it("CURRENT BUG: empty title returns 500 instead of 400", async () => {
 			const response = await request(ctx.app)
 				.post("/notes")
 				.set(auth())
@@ -132,7 +132,7 @@ describe("notes", () => {
 			})
 		})
 
-		it("BUG atual: a single note with non-JSON content makes GET /notes fail with 500", async () => {
+		it("CURRENT BUG: a single note with non-JSON content makes GET /notes fail with 500", async () => {
 			await createNote(ctx.app, token, { title: "ok", content: "ok", notebook_id: notebookId })
 			await ctx.knex("notes").insert({
 				title: "legacy",
@@ -180,14 +180,14 @@ describe("notes", () => {
 			})
 		})
 
-		it("BUG atual: nonexistent note returns 200 { success: false } instead of 404", async () => {
+		it("CURRENT BUG: nonexistent note returns 200 { success: false } instead of 404", async () => {
 			const response = await request(ctx.app).get("/notes/999")
 
 			expect(response.status).toBe(200)
 			expect(response.body).toEqual({ success: false })
 		})
 
-		it("BUG atual: non-numeric id returns 200 { success: false } instead of 400", async () => {
+		it("CURRENT BUG: non-numeric id returns 200 { success: false } instead of 400", async () => {
 			const response = await request(ctx.app).get("/notes/abc")
 
 			expect(response.status).toBe(200)
@@ -217,7 +217,7 @@ describe("notes", () => {
 			expect(row.content).toBe('"new"')
 		})
 
-		it("BUG atual: notebook_id in the body is silently ignored (note cannot change notebook)", async () => {
+		it("CURRENT BUG: notebook_id in the body is silently ignored (note cannot change notebook)", async () => {
 			const otherNotebook = await createNotebook(ctx.app, token, "Other")
 			const id = await createNote(ctx.app, token, {
 				title: "Title",
@@ -236,7 +236,7 @@ describe("notes", () => {
 			expect(row.notebook_id).toBe(notebookId)
 		})
 
-		it("BUG atual: empty content is saved as the string \"[]\"", async () => {
+		it("CURRENT BUG: empty content is saved as the string \"[]\"", async () => {
 			const id = await createNote(ctx.app, token, {
 				title: "Title",
 				content: "x",
@@ -265,7 +265,7 @@ describe("notes", () => {
 			expect(row.content).toBe('"x"')
 		})
 
-		it("BUG atual: nonexistent note returns 200 { success: true } instead of 404", async () => {
+		it("CURRENT BUG: nonexistent note returns 200 { success: true } instead of 404", async () => {
 			const response = await request(ctx.app)
 				.patch("/notes/999")
 				.set(auth())
@@ -275,7 +275,7 @@ describe("notes", () => {
 			expect(response.body).toEqual({ success: true })
 		})
 
-		it("BUG atual: empty title returns 500 instead of 400", async () => {
+		it("CURRENT BUG: empty title returns 500 instead of 400", async () => {
 			const id = await createNote(ctx.app, token, {
 				title: "Title",
 				content: "x",
@@ -309,14 +309,14 @@ describe("notes", () => {
 			expect(await ctx.knex("notes").select()).toEqual([])
 		})
 
-		it("BUG atual: nonexistent note returns 200 { success: true } instead of 404", async () => {
+		it("CURRENT BUG: nonexistent note returns 200 { success: true } instead of 404", async () => {
 			const response = await request(ctx.app).delete("/notes/999").set(auth())
 
 			expect(response.status).toBe(200)
 			expect(response.body).toEqual({ success: true, id: 999 })
 		})
 
-		it("BUG atual: non-numeric id returns 500 instead of 400", async () => {
+		it("CURRENT BUG: non-numeric id returns 500 instead of 400", async () => {
 			const response = await request(ctx.app).delete("/notes/abc").set(auth())
 
 			expect(response.status).toBe(500)

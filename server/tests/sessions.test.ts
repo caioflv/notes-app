@@ -28,7 +28,7 @@ describe("POST /sessions", () => {
 		expect(payload.exp! - payload.iat!).toBe(24 * 60 * 60)
 	})
 
-	it("BUG atual: wrong password returns 500 instead of 401", async () => {
+	it("CURRENT BUG: wrong password returns 500 instead of 401", async () => {
 		const response = await request(ctx.app)
 			.post("/sessions")
 			.send({ username: "caio", password: "wrong" })
@@ -37,7 +37,7 @@ describe("POST /sessions", () => {
 		expect(response.body).toEqual({ message: "Email e/ou senha incorreta" })
 	})
 
-	it("BUG atual: unknown username returns 500 instead of 401", async () => {
+	it("CURRENT BUG: unknown username returns 500 instead of 401", async () => {
 		const response = await request(ctx.app)
 			.post("/sessions")
 			.send({ username: "someone", password: "123" })
@@ -46,7 +46,7 @@ describe("POST /sessions", () => {
 		expect(response.body).toEqual({ message: "Email e/ou senha incorreta" })
 	})
 
-	it("BUG atual: request without body returns 500 with a TypeError message", async () => {
+	it("CURRENT BUG: request without body returns 500 with a TypeError message", async () => {
 		const response = await request(ctx.app).post("/sessions")
 
 		expect(response.status).toBe(500)

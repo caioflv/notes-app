@@ -1,15 +1,21 @@
 import { spawn, type ChildProcess } from "node:child_process"
 import fs from "node:fs"
+import { createRequire } from "node:module"
 import net from "node:net"
 import os from "node:os"
 import path from "node:path"
+import { pathToFileURL } from "node:url"
 import jwt from "jsonwebtoken"
 import request from "supertest"
 import { afterEach, beforeEach, describe, expect, it } from "vitest"
 import { createTestContext, type TestContext } from "./helpers"
 
 const serverRoot = path.resolve(__dirname, "..")
-const tsxBin = path.join(serverRoot, "node_modules", ".bin", "tsx")
+// Absolute file URL: a bare "tsx" specifier would be resolved from the child's
+// temporary cwd, where node_modules does not exist.
+const tsxLoader = pathToFileURL(
+	createRequire(import.meta.url).resolve("tsx", { paths: [serverRoot] }),
+).href
 
 function freePort(): Promise<number> {
 	return new Promise((resolve, reject) => {
@@ -24,7 +30,11 @@ function freePort(): Promise<number> {
 
 function startServer(cwd: string, env: NodeJS.ProcessEnv): Promise<ChildProcess> {
 	return new Promise((resolve, reject) => {
-		const child = spawn(tsxBin, [path.join(serverRoot, "src", "server.ts")], { cwd, env })
+		const child = spawn(
+			process.execPath,
+			["--import", tsxLoader, path.join(serverRoot, "src", "server.ts")],
+			{ cwd, env },
+		)
 		let output = ""
 		const timer = setTimeout(() => reject(new Error(`server did not start:\n${output}`)), 15000)
 		const onData = (chunk: Buffer) => {
@@ -60,7 +70,7 @@ describe("src/server.ts entry point", () => {
 		await ctx.cleanup()
 	})
 
-	it("BUG atual: AUTH_SECRET from .env is ignored and JWTs are signed/verified with \"default\"", async () => {
+	it("CURRENT BUG: AUTH_SECRET from .env is ignored and JWTs are signed/verified with \"default\"", async () => {
 		const port = await freePort()
 		fs.writeFileSync(
 			path.join(cwd, ".env"),

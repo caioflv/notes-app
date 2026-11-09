@@ -1,4 +1,11 @@
 /// <reference types="vite/client" />
+// Each test gets its own temporary SQLite file:
+// - vi.resetModules(): src/database/knex.ts creates its connection when it is first
+//   imported (reading DATABASE_FILE at that moment), so the modules must be
+//   re-imported for each test to point app and knex at the new file.
+// - import.meta.glob: knex's default migration loader require()s the .ts files from
+//   disk, which plain Node cannot load. Here Vite loads them and passes them to knex
+//   through a custom migrationSource, so new migrations are still picked up.
 import fs from "node:fs"
 import os from "node:os"
 import path from "node:path"

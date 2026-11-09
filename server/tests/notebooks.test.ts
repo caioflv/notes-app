@@ -68,7 +68,7 @@ describe("notebooks", () => {
 			expect(rows[0].title).toBe("Work")
 		})
 
-		it("BUG atual: empty title returns 500 with the raw Zod error instead of 400", async () => {
+		it("CURRENT BUG: empty title returns 500 with the raw Zod error instead of 400", async () => {
 			const response = await request(ctx.app)
 				.post("/notebooks")
 				.set(auth())
@@ -80,14 +80,14 @@ describe("notebooks", () => {
 			)
 		})
 
-		it("BUG atual: missing title returns 500 instead of 400", async () => {
+		it("CURRENT BUG: missing title returns 500 instead of 400", async () => {
 			const response = await request(ctx.app).post("/notebooks").set(auth()).send({})
 
 			expect(response.status).toBe(500)
 			expect(response.body.message).toContain("invalid_type")
 		})
 
-		it("BUG atual: whitespace-only title is accepted", async () => {
+		it("CURRENT BUG: whitespace-only title is accepted", async () => {
 			const response = await request(ctx.app)
 				.post("/notebooks")
 				.set(auth())
@@ -123,7 +123,7 @@ describe("notebooks", () => {
 			})
 		})
 
-		it("BUG atual: nonexistent notebook returns 200 with an empty list instead of 404", async () => {
+		it("CURRENT BUG: nonexistent notebook returns 200 with an empty list instead of 404", async () => {
 			const response = await request(ctx.app).get("/notebooks/999")
 
 			expect(response.status).toBe(200)
@@ -146,7 +146,7 @@ describe("notebooks", () => {
 			expect(row.title).toBe("New")
 		})
 
-		it("BUG atual: nonexistent notebook returns 200 { success: true } instead of 404", async () => {
+		it("CURRENT BUG: nonexistent notebook returns 200 { success: true } instead of 404", async () => {
 			const response = await request(ctx.app)
 				.patch("/notebooks/999")
 				.set(auth())
@@ -156,7 +156,7 @@ describe("notebooks", () => {
 			expect(response.body).toEqual({ success: true })
 		})
 
-		it("BUG atual: non-numeric id returns 500 instead of 400", async () => {
+		it("CURRENT BUG: non-numeric id returns 500 instead of 400", async () => {
 			const response = await request(ctx.app)
 				.patch("/notebooks/abc")
 				.set(auth())
@@ -166,7 +166,7 @@ describe("notebooks", () => {
 			expect(response.body.message).toContain("invalid_type")
 		})
 
-		it("BUG atual: empty title returns 500 instead of 400", async () => {
+		it("CURRENT BUG: empty title returns 500 instead of 400", async () => {
 			const id = await createNotebook(ctx.app, token, "Old")
 
 			const response = await request(ctx.app)
@@ -201,7 +201,7 @@ describe("notebooks", () => {
 			expect(await ctx.knex("notes").select("id")).toEqual([{ id: keptNoteId }])
 		})
 
-		it("BUG atual: nonexistent notebook returns 200 { success: true } instead of 404", async () => {
+		it("CURRENT BUG: nonexistent notebook returns 200 { success: true } instead of 404", async () => {
 			const response = await request(ctx.app).delete("/notebooks/999").set(auth())
 
 			expect(response.status).toBe(200)
