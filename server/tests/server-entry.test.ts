@@ -53,6 +53,14 @@ function startServer(cwd: string, env: NodeJS.ProcessEnv): Promise<ChildProcess>
 	})
 }
 
+function stopServer(child: ChildProcess): Promise<void> {
+	if (child.exitCode !== null || child.signalCode !== null) return Promise.resolve()
+	return new Promise((resolve) => {
+		child.once("exit", () => resolve())
+		child.kill()
+	})
+}
+
 describe("src/server.ts entry point", () => {
 	let ctx: TestContext
 	let cwd: string
@@ -64,7 +72,7 @@ describe("src/server.ts entry point", () => {
 	})
 
 	afterEach(async () => {
-		child?.kill()
+		if (child) await stopServer(child)
 		child = undefined
 		fs.rmSync(cwd, { recursive: true, force: true })
 		await ctx.cleanup()
