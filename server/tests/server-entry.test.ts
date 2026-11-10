@@ -78,13 +78,13 @@ describe("src/server.ts entry point", () => {
 		await ctx.cleanup()
 	})
 
-	it("CURRENT BUG: AUTH_SECRET from .env is ignored and JWTs are signed/verified with \"default\"", async () => {
+	it("signs and verifies JWTs with AUTH_SECRET from .env, rejecting tokens signed with \"default\"", async () => {
 		const port = await freePort()
 		fs.writeFileSync(
 			path.join(cwd, ".env"),
 			`DATABASE_URL="file:./db/database.db"\nAUTH_SECRET=from-dotenv\nPORT=${port}\n`,
 		)
-		const { AUTH_SECRET: _ignored, ...parentEnv } = process.env
+		const { AUTH_SECRET: _secret, PORT: _port, ...parentEnv } = process.env
 		child = await startServer(cwd, { ...parentEnv, DATABASE_FILE: ctx.dbFile })
 
 		const baseUrl = `http://127.0.0.1:${port}`
@@ -92,8 +92,14 @@ describe("src/server.ts entry point", () => {
 			.post("/sessions")
 			.send({ username: "caio", password: "123" })
 
-		expect(() => jwt.verify(login.body.token, "default")).not.toThrow()
-		expect(() => jwt.verify(login.body.token, "from-dotenv")).toThrow()
+		expect(() => jwt.verify(login.body.token, "from-dotenv")).not.toThrow()
+		expect(() => jwt.verify(login.body.token, "default")).toThrow()
+
+		const valid = await request(baseUrl)
+			.post("/notebooks")
+			.set("Authorization", `Bearer ${login.body.token}`)
+			.send({ title: "created with a valid token" })
+		expect(valid.status).toBe(201)
 
 		const forged = jwt.sign({ role: "common" }, "default", { subject: "1" })
 		const response = await request(baseUrl)
@@ -101,7 +107,28 @@ describe("src/server.ts entry point", () => {
 			.set("Authorization", `Bearer ${forged}`)
 			.send({ title: "created with a forged token" })
 
-		expect(response.status).toBe(201)
+		expect(response.status).toBe(500)
+		expect(response.body).toEqual({ message: "invalid signature" })
+	})
+
+	it("prefers AUTH_SECRET from the real environment over .env", async () => {
+		const port = await freePort()
+		fs.writeFileSync(
+			path.join(cwd, ".env"),
+			`DATABASE_URL="file:./db/database.db"\nAUTH_SECRET=from-dotenv\nPORT=${port}\n`,
+		)
+		const { PORT: _port, ...parentEnv } = process.env
+		child = await startServer(cwd, {
+			...parentEnv,
+			AUTH_SECRET: "from-environment",
+			DATABASE_FILE: ctx.dbFile,
+		})
+
+		const login = await request(`http://127.0.0.1:${port}`)
+			.post("/sessions")
+			.send({ username: "caio", password: "123" })
+
+		expect(() => jwt.verify(login.body.token, "from-environment")).not.toThrow()
 	})
 
 	it("fails to start when DATABASE_URL or AUTH_SECRET are missing", async () => {
