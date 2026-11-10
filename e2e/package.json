@@ -1,0 +1,14 @@
+{
+	"name": "notes-e2e",
+	"version": "1.0.0",
+	"private": true,
+	"description": "End-to-end smoke tests for the notes app (client + server)",
+	"type": "module",
+	"scripts": {
+		"test": "playwright test"
+	},
+	"license": "ISC",
+	"devDependencies": {
+		"@playwright/test": "1.58.2"
+	}
+}
