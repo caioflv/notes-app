@@ -166,6 +166,22 @@ curl -s -X POST localhost:3333/notes -H 'Content-Type: application/json' \
 curl -s localhost:3333/notes
 ```
 
+### Smoke test E2E (Playwright)
+
+Sobe a API num banco SQLite temporário (`e2e/.tmp/`, com as migrations) e o front com
+`webpack serve`, e testa no Chromium: criar caderno e nota, recarregar, buscar, excluir. Também
+fixa bugs atuais do front (testes com nome `CURRENT BUG:`).
+
+Pré-requisitos: `npm ci` em `server/` e em `client/`, o alias de `192.168.0.110` da seção 2 e as
+portas 3333 e 3005 livres (pare `npm run dev` antes). Não precisa de `server/.env`.
+
+```bash
+cd e2e
+npm ci
+npx playwright install chromium   # na primeira vez
+npm test
+```
+
 ### Docker
 
 **Não funciona hoje.** `docker compose up --build` falha no build da imagem com
